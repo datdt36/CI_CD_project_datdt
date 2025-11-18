@@ -1,4 +1,4 @@
-name: CI-CD Ansible Deploy
+name: CI-CD Ansible LAN
 
 on:
   push:
@@ -6,23 +6,16 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted   # 🟢 dùng runner trong LAN
 
     steps:
-      - name: Checkout source code
+      - name: Checkout source
         uses: actions/checkout@v3
 
       - name: Install Ansible
         run: |
           sudo apt update
           sudo apt install -y ansible
-
-      - name: Prepare SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-         # ssh-keyscan ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
       - name: Run Ansible Playbook
         run: |
