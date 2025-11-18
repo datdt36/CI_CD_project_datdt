@@ -4,6 +4,26 @@
   become: yes
 
   tasks:
+
+    - name: Install nginx (Debian/Ubuntu)
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install nginx (CentOS/RHEL)
+      yum:
+        name: nginx
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Ensure nginx is enabled and running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
     - name: Create target directory
       file:
         path: /var/www/html
@@ -13,12 +33,21 @@
       copy:
         src: ../app/
         dest: /var/www/html/
+        owner: nginx
+        group: nginx
+        mode: 0644
+      when: ansible_os_family == "RedHat"
+
+    - name: Copy web files to server (Debian/Ubuntu)
+      copy:
+        src: ../app/
+        dest: /var/www/html/
         owner: www-data
         group: www-data
         mode: 0644
+      when: ansible_os_family == "Debian"
 
-    - name: Restart nginx (nếu dùng)
+    - name: Restart nginx
       service:
         name: nginx
         state: restarted
-      ignore_errors: yes
