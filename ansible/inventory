@@ -1,2 +1,3 @@
 [web]
 prod ansible_host=172.16.36.81 ansible_user=datdt ansible_port=22
+prod ansible_host=172.16.36.82 ansible_user=datdt ansible_port=22
