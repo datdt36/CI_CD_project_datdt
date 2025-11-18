@@ -1,0 +1,24 @@
+---
+- name: Deploy simple web app
+  hosts: web
+  become: yes
+
+  tasks:
+    - name: Create target directory
+      file:
+        path: /var/www/html
+        state: directory
+
+    - name: Copy web files to server
+      copy:
+        src: ../app/
+        dest: /var/www/html/
+        owner: www-data
+        group: www-data
+        mode: 0644
+
+    - name: Restart nginx (nếu dùng)
+      service:
+        name: nginx
+        state: restarted
+      ignore_errors: yes

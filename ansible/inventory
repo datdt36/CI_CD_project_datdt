@@ -1,0 +1,2 @@
+[web]
+prod ansible_host=123.123.123.123 ansible_user=ubuntu ansible_port=22
