@@ -12,10 +12,10 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Install Ansible
-        run: |
-          #sudo yum update
-          sudo yum install -y ansible
+      # - name: Install Ansible
+      #   run: |
+      #     #sudo yum update
+      #     sudo yum install -y ansible
 
       - name: Run Ansible Playbook
         run: |
